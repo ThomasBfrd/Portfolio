@@ -3,7 +3,7 @@
 
 <template>
     <div>
-        <section class="flex flex-col gap-4 text-foreground">
+        <section class="p-4" data-testid="about-section">
             <h2 class="text-2xl font-bold mb-4">A propos</h2>
             <div class="flex flex-col justify-start items-start gap-4 mb-4">
                 <p>Je suis Thomas Bouffard, développeur web fullstack.</p>

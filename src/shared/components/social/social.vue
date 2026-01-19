@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SOCIALS } from '../const/socials';
+import { SOCIALS } from '../../const/socials';
 
 defineProps<{
     isCentered: boolean;
@@ -13,7 +13,7 @@ defineProps<{
             :class="isCentered ? 'items-center' : 'items-start'">
             <p>thomas.bfrd@gmail.com</p>
             <ul class="flex gap-8">
-                <li v-for="social in SOCIALS" :key="social.platform">
+                <li v-for="social in SOCIALS" :key="social.platform" data-testid="social">
                     <a :href="social.url" target="_blank" class="inline-block">
                         <component :is="social.icon"
                             class="h-12 w-12 fill-foreground hover:fill-foreground transition-all duration-300 hover:scale-110" />
