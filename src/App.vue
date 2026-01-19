@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import Aside from './shared/components/aside.vue';
-import ProfilePicture from './shared/components/profile-picture.vue';
+import ProfilePicture from './shared/components/profile-picture/profile-picture.vue';
 import { PROFILE } from './shared/const/profile';
 import { useDark, useToggle } from '@vueuse/core';
 
