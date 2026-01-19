@@ -4,6 +4,7 @@ import Aside from './shared/components/aside/aside.vue';
 import ProfilePicture from './shared/components/profile-picture/profile-picture.vue';
 import { PROFILE } from './shared/const/profile';
 import { useDark, useToggle } from '@vueuse/core';
+import { Analytics } from "@vercel/analytics/nuxt";
 
 const sidebarOpen = ref(false);
 const path = ref("");
@@ -76,4 +77,5 @@ onUnmounted(() => {
       </div>
     </div>
   </div>
+  <Analytics/>
 </template>
