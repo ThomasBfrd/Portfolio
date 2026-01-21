@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, type WritableComputedRef } from 'vue';
 import Aside from './shared/components/aside/aside.vue';
 import ProfilePicture from './shared/components/profile-picture/profile-picture.vue';
 import { PROFILE } from './shared/const/profile';
 import { useDark, useToggle } from '@vueuse/core';
-import { Analytics } from "@vercel/analytics/nuxt";
 
 const sidebarOpen = ref(false);
 const path = ref("");
 const setSidebarOpened = (open: boolean) => sidebarOpen.value = open;
 const setRouterPath = (newPath: string) => path.value = newPath;
 
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
+const isDark: WritableComputedRef<boolean> = useDark();
+const toggleDark: () => boolean = useToggle(isDark);
 
 watch(sidebarOpen, (isOpen) => {
   if (window.innerWidth >= 640) return;
@@ -26,14 +25,15 @@ const onResize = () => {
   }
 };
 
+const handler = () => requestAnimationFrame(onResize);
+
 onMounted(() => {
-  const handler = () => requestAnimationFrame(onResize);
   window.addEventListener('resize', handler);
   onResize();
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', () => requestAnimationFrame(onResize));
+  window.removeEventListener('resize', handler);
 });
 
 </script>
@@ -65,11 +65,13 @@ onUnmounted(() => {
           <main class="flex flex-col" :class="sidebarOpen && 'overflow-hidden h-screen'">
             <div v-if="sidebarOpen" class="md:hidden bg-zinc-950/80 h-screen fixed inset-0 z-10 backdrop-blur-[3px]" @click="setSidebarOpened(!sidebarOpen)"></div>
             <RouterView v-slot="{ Component }">
-              <Transition as="template" mode="out-in" enter-active-class="transition-all duration-300"
+              <Transition mode="out-in" enter-active-class="transition-all duration-300"
                 enter-from-class="opacity-0 translate-y-4" enter-to-class="opacity-100 translate-y-0"
                 leave-active-class="transition-all duration-300" leave-from-class="opacity-100 translate-y-0"
                 leave-to-class="opacity-0 -translate-y-4">
-                <component :is="Component" :key="$route.path" class="p-4" />
+                <div :key="$route.path" class="p-4">
+                  <component :is="Component" />
+                </div>
               </Transition>
             </RouterView>
           </main>
@@ -77,5 +79,4 @@ onUnmounted(() => {
       </div>
     </div>
   </div>
-  <Analytics/>
 </template>
