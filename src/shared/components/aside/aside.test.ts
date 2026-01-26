@@ -2,6 +2,8 @@ import { DOMWrapper, mount, type VueWrapper } from "@vue/test-utils";
 import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 import Aside from "./aside.vue";
 import { byId } from "@/shared/tests/utils/by-id";
+import { ref } from "vue";
+import { profileDataMock } from "@/shared/tests/mocks/data-mocks";
 
 describe("Affichage du composant Aside", () => {
   let wrapper: VueWrapper;
@@ -28,6 +30,16 @@ describe("Affichage du composant Aside", () => {
         setRouterPath,
         setDarkMode,
       },
+      global: {
+        provide: {
+          portfolioData: ref({profile: profileDataMock})
+        },
+        stubs: {
+          RouterLink: {
+            template: `<a @click="$emit('click')"></a>`
+          }
+        }
+      }
     });
   });
 
@@ -36,33 +48,33 @@ describe("Affichage du composant Aside", () => {
   });
 
   it("Devrait afficher la balise Aside", () => {
-    const asideWrapper: DOMWrapper<Element> = wrapper.find(byId("aside"));
+    const asideWrapper: DOMWrapper<HTMLElement> = wrapper.find(byId("aside"));
 
     expect(asideWrapper.exists()).toBeTruthy();
   });
 
   it("Devrait afficher le nom, la photo de profil, le menu et les réseaux sociaux", () => {
-    const toggleResposiveBtn: DOMWrapper<Element> = wrapper.find(
+    const toggleResposiveBtn: DOMWrapper<HTMLElement> = wrapper.find(
       byId("toggle-aside-btn"),
     );
-    const pseudoWrapper: DOMWrapper<Element> = wrapper.find(byId("pseudo"));
-    const profilePicture: DOMWrapper<Element> = wrapper.find(
+    const pseudoWrapper: DOMWrapper<HTMLElement> = wrapper.find(byId("pseudo"));
+    const profilePicture: DOMWrapper<HTMLElement> = wrapper.find(
       byId("profile-picture"),
     );
-    const menuWrapper: DOMWrapper<Element>[] = wrapper.findAll(
+    const menuWrapper: DOMWrapper<HTMLElement>[] = wrapper.findAll(
       byId("menu-item"),
     );
-    const menuWActionrapper: DOMWrapper<Element>[] = wrapper.findAll(
+    const menuWActionrapper: DOMWrapper<HTMLElement>[] = wrapper.findAll(
       byId("menu-action"),
     );
-    const toggleThemeButton: DOMWrapper<Element> = wrapper.find(
+    const toggleThemeButton: DOMWrapper<HTMLElement> = wrapper.find(
       byId("toggle-theme"),
     );
-    const socialsWrapper: DOMWrapper<Element> = wrapper.find(byId("socials"));
+    const socialsWrapper: DOMWrapper<HTMLElement> = wrapper.find(byId("socials"));
 
     expect(toggleResposiveBtn.exists()).toBeTruthy();
     expect(pseudoWrapper.exists()).toBeTruthy();
-    expect(pseudoWrapper.text()).toContain("@thomasbfrd");
+    expect(pseudoWrapper.text()).toContain("@jdoe");
     expect(profilePicture.exists()).toBeTruthy();
     expect(menuWrapper.length).toBeTruthy();
     expect(menuWActionrapper.length).toBeTruthy();
