@@ -8,8 +8,8 @@ export const profileDataMock: Profile = {
   pseudo: "@jdoe",
   email: "john-doe@gmail.com",
   skills: [
-    {name: "skill1", background: "color1"},
-    {name: "skill2", background: "color2"},
+    {name: "skill1", gradient: "color1"},
+    {name: "skill2", gradient: "color2"},
   ],
   resume: "",
   bio: ["mock1", "mock2", "mock3"]
