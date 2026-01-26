@@ -10,5 +10,5 @@ export interface Profile {
 
 export interface Skills {
   name: string;
-  background: string;
+  gradient: string;
 }

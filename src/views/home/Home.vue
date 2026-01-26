@@ -29,8 +29,8 @@ const recentActivities: ComputedRef<Activity[]> = computed(() => {
     <h2 class="text-2xl font-bold mb-4">Skills</h2>
     <ul class="flex flex-wrap gap-4">
       <li v-for="skill in profileData?.skills ?? []" :key="skill.name" data-testid="skill-items"
-        class="text-center font-semibold p-3 border border-border rounded-full cursor-pointer transition-color duration-300 ease-out relative overflow-hidden hover:text-white group"
-        :class="skill.background">
+        class="skill-hover text-center font-semibold p-3 border border-border rounded-full cursor-pointer transition-color duration-300 ease-out relative overflow-hidden hover:text-white group"
+        :style="{'--hover-bg': skill.gradient}">
         <span class="group-hover:brightness-150">{{ skill.name }}</span>
       </li>
     </ul>
@@ -41,3 +41,9 @@ const recentActivities: ComputedRef<Activity[]> = computed(() => {
     <Activities :activities="recentActivities" data-testid="recent-activities" />
   </section>
 </template>
+
+<style scoped>
+  .skill-hover:hover {
+    background: var(--hover-bg);
+  }
+</style>
