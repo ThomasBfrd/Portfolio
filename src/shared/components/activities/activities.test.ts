@@ -1,10 +1,9 @@
 import { DOMWrapper, VueWrapper, mount } from "@vue/test-utils";
 import Activities from "./activities.vue";
-import { EXPERIENCES } from "@/shared/const/experiences";
 import { beforeEach, describe, expect, it } from "vitest";
 import { byId } from "@/shared/tests/utils/by-id";
-import { WORKS } from "@/shared/const/works";
 import type { Activity } from "@/shared/interfaces/activity.interface";
+import { experiencesDataMock, worksDataMock } from "@/shared/tests/mocks/data-mocks";
 
 describe("Social", () => {
   let wrapper: VueWrapper;
@@ -13,8 +12,8 @@ describe("Social", () => {
     beforeEach(() => {
       wrapper = mount(Activities, {
         props: {
-          activities: EXPERIENCES,
-        },
+          activities: experiencesDataMock
+        }
       });
     });
 
@@ -42,7 +41,7 @@ describe("Social", () => {
     beforeEach(() => {
       wrapper = mount(Activities, {
         props: {
-          activities: WORKS,
+          activities: worksDataMock,
         },
       });
     });
@@ -58,7 +57,7 @@ describe("Social", () => {
     it("Devrait masquer la partie TODO s'il n'y a pas d'informations", () => {
       wrapper = mount(Activities, {
         props: {
-          activities: EXPERIENCES,
+          activities: experiencesDataMock,
         },
       });
       const activities: DOMWrapper<Element>[] = wrapper.findAll(
@@ -78,7 +77,7 @@ describe("Social", () => {
         props: {
           activities: [
             {
-              ...WORKS[0],
+              ...worksDataMock[0],
               website: "",
             } as Activity,
           ],
@@ -101,7 +100,7 @@ describe("Social", () => {
         props: {
           activities: [
             {
-              ...EXPERIENCES[0],
+              ...experiencesDataMock[0],
               screen: "",
             } as Activity,
           ],
@@ -124,7 +123,7 @@ describe("Social", () => {
     beforeEach(() => {
       wrapper = mount(Activities, {
         props: {
-          activities: EXPERIENCES,
+          activities: experiencesDataMock,
         },
       });
     });
