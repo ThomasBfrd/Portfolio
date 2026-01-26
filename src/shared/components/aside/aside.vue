@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { MENU_ITEMS } from '../../const/menu-items';
-import About from '../social/social.vue';
+import Social from '../social/social.vue';
 import ProfilePicture from '../profile-picture/profile-picture.vue';
 import ArrowRight from "../../../assets/svg/arrow-right.svg?component";
+import { computed, inject, type ComputedRef, type Ref } from 'vue';
+import type { Portfolio } from '@/shared/interfaces/portfolio.interface';
+import type { Profile } from '@/shared/interfaces/profile.interface';
 
 defineProps<{
     path: string;
@@ -11,6 +14,10 @@ defineProps<{
     setRouterPath: (path: string) => void;
     setDarkMode: () => void;
 }>();
+
+const portfolioData: Ref<Portfolio> | undefined = inject('portfolioData');
+const profileData: ComputedRef<Profile | undefined> = computed<Profile | undefined>(() => portfolioData?.value?.profile);
+
 </script>
 
 <template>
@@ -27,7 +34,7 @@ defineProps<{
 
         <section class="flex flex-col items-center gap-2 border-border pb-4">
             <ProfilePicture data-testid="profile-picture" />
-            <span class="text-foreground text-center font-light" data-testid="pseudo">@thomasbfrd</span>
+            <span class="text-foreground text-center font-light" data-testid="pseudo">{{ profileData?.pseudo }}</span>
         </section>
 
         <div class="w-full">
@@ -61,7 +68,7 @@ defineProps<{
 
         <div class="w-full flex flex-col items-center mb-6" data-testid="socials">
             <h2 class="text-2xl font-bold mb-4">Contact</h2>
-            <About :is-centered="true" />
+            <Social :is-centered="true" />
         </div>
     </aside>
 </template>

@@ -2,12 +2,20 @@ import { DOMWrapper, mount, VueWrapper } from "@vue/test-utils";
 import { describe, it, expect, beforeEach } from "vitest";
 import About from "./About.vue";
 import { byId } from "@/shared/tests/utils/by-id";
+import { ref } from "vue";
+import { profileDataMock } from "@/shared/tests/mocks/data-mocks";
 
 describe("Affichage de la vue A propos", () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {
-    wrapper = mount(About);
+    wrapper = mount(About, {
+      global: {
+        provide: {
+          portfolioData: ref({profile: profileDataMock})
+        }
+      }
+    });
     expect(wrapper).toBeTruthy();
   });
 
@@ -22,7 +30,7 @@ describe("Affichage de la vue A propos", () => {
   });
 
   it("Devrait contenir plusieurs paragraphes", () => {
-    const aboutParagraph: DOMWrapper<HTMLElement> = wrapper.find("p");
-    expect(aboutParagraph.findAllComponents.length).toBeGreaterThan(0);
+    const aboutParagraph: DOMWrapper<HTMLElement>[] = wrapper.findAll("p");
+    expect(aboutParagraph.length).toEqual(3);
   });
 });

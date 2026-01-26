@@ -2,12 +2,23 @@ import { DOMWrapper, VueWrapper, mount } from "@vue/test-utils";
 import { beforeEach, describe, expect, it } from "vitest";
 import Social from "./social.vue";
 import { byId } from "@/shared/tests/utils/by-id";
+import { ref } from "vue";
+import { socialDataMock } from "@/shared/tests/mocks/data-mocks";
 
 describe("Affichage du composant Social", () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {
-    wrapper = mount(Social);
+    wrapper = mount(Social, {
+      props: {
+        isCentered: false,
+      },
+      global: {
+        provide: {
+          portfolioData: ref({socials: socialDataMock})
+        }
+      }
+    });
   });
 
   it("Devrait monter le composant Social", () => {
@@ -15,8 +26,8 @@ describe("Affichage du composant Social", () => {
   });
 
   it("Devrait afficher les différents liens sociaux", () => {
-    const socialWrapper: DOMWrapper<Element>[] = wrapper.findAll(byId('social'));
+    const socialWrapper: DOMWrapper<HTMLElement>[] = wrapper.findAll(byId('social'));
 
-    expect(socialWrapper.length).toBeGreaterThan(0);
+    expect(socialWrapper.length).toEqual(2);
   })
 });
